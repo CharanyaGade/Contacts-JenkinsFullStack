@@ -1,0 +1,6 @@
+# Eclipse IDE files
+.metadata/
+*.iml
+*.class
+/bin/
+/target/
