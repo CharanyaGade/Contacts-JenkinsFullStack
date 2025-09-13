@@ -64,7 +64,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>contacts</finalName>
+	<finalName>contactapi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
