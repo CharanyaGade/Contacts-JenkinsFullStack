@@ -39,13 +39,10 @@ pipeline {
         stage('Deploy Backend to Tomcat') {
             steps {
                 bat '''
-                if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactsapi.war" (
-                    del /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactsapi.war"
+                if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactapi.war" (
+                    del /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactapi.war"
                 )
-                if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactsapi.war" (
-                    rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactsapi.war"
-                )
-                copy "C:\\FullStack_Jenkins\\Backend\\JenkinsFullStack\\target\\*.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactsapi.war"
+                copy "C:\\FullStack_Jenkins\\Backend\\JenkinsFullStack\\target\\contactapi.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\contactapi.war"
                 '''
             }
         }
