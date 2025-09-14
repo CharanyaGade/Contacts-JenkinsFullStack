@@ -6,7 +6,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contacts")
-@CrossOrigin(origins = "http://localhost:5173")  // React runs on 5173 by default
+@CrossOrigin(origins = "*")  // React runs on 5173 by default
 public class ContactController {
 
     private List<Contact> contacts = new ArrayList<>();
