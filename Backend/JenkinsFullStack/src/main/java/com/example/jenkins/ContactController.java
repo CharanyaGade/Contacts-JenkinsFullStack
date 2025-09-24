@@ -2,43 +2,44 @@ package com.example.jenkins;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
-@CrossOrigin(origins = "*") // allow React frontend
+@RequestMapping("/")   // root context
+@CrossOrigin(origins = "*") // allow React frontend calls
 public class ContactController {
 
     @Autowired
     private ContactRepository contactRepository;
 
-    // Root endpoint
+    // ROOT endpoint
     @GetMapping
     public String home() {
         return "Jenkins Full Stack Deployment API is running...";
     }
 
     // CREATE
-    @PostMapping("/contacts")
+    @PostMapping("contacts")
     public Contact addContact(@RequestBody Contact contact) {
         return contactRepository.save(contact);
     }
 
     // READ ALL
-    @GetMapping("/contacts")
+    @GetMapping("contacts")
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
     }
 
     // READ ONE
-    @GetMapping("/contacts/{id}")
+    @GetMapping("contacts/{id}")
     public Optional<Contact> getContactById(@PathVariable int id) {
         return contactRepository.findById(id);
     }
 
     // UPDATE
-    @PutMapping("/contacts/{id}")
+    @PutMapping("contacts/{id}")
     public Contact updateContact(@PathVariable int id, @RequestBody Contact updatedContact) {
         return contactRepository.findById(id)
                 .map(contact -> {
@@ -51,7 +52,7 @@ public class ContactController {
     }
 
     // DELETE
-    @DeleteMapping("/contacts/{id}")
+    @DeleteMapping("contacts/{id}")
     public String deleteContact(@PathVariable int id) {
         if (contactRepository.existsById(id)) {
             contactRepository.deleteById(id);
