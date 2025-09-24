@@ -1,52 +1,62 @@
 package com.example.jenkins;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/contacts")
-@CrossOrigin(origins = "*")  // React runs on 5173 by default
+@RequestMapping("/")
+@CrossOrigin(origins = "*") // allow React frontend
 public class ContactController {
 
-    private List<Contact> contacts = new ArrayList<>();
-    private int nextId = 1;
-    @GetMapping("/")
+    @Autowired
+    private ContactRepository contactRepository;
+
+    // Root endpoint
+    @GetMapping
     public String home() {
         return "Jenkins Full Stack Deployment API is running...";
     }
+
     // CREATE
-    @PostMapping
+    @PostMapping("/contacts")
     public Contact addContact(@RequestBody Contact contact) {
-        contact.setId(nextId++);
-        contacts.add(contact);
-        return contact;
+        return contactRepository.save(contact);
     }
 
-    // READ
-    @GetMapping
+    // READ ALL
+    @GetMapping("/contacts")
     public List<Contact> getAllContacts() {
-        return contacts;
+        return contactRepository.findAll();
+    }
+
+    // READ ONE
+    @GetMapping("/contacts/{id}")
+    public Optional<Contact> getContactById(@PathVariable int id) {
+        return contactRepository.findById(id);
     }
 
     // UPDATE
-    @PutMapping("/{id}")
+    @PutMapping("/contacts/{id}")
     public Contact updateContact(@PathVariable int id, @RequestBody Contact updatedContact) {
-        for (Contact c : contacts) {
-            if (c.getId() == id) {
-                c.setName(updatedContact.getName());
-                c.setPhone(updatedContact.getPhone());
-                c.setEmail(updatedContact.getEmail());
-                return c;
-            }
-        }
-        return null;
+        return contactRepository.findById(id)
+                .map(contact -> {
+                    contact.setName(updatedContact.getName());
+                    contact.setPhone(updatedContact.getPhone());
+                    contact.setEmail(updatedContact.getEmail());
+                    return contactRepository.save(contact);
+                })
+                .orElseThrow(() -> new RuntimeException("Contact not found with id " + id));
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/contacts/{id}")
     public String deleteContact(@PathVariable int id) {
-        contacts.removeIf(c -> c.getId() == id);
-        return "Contact deleted with id: " + id;
+        if (contactRepository.existsById(id)) {
+            contactRepository.deleteById(id);
+            return "Contact deleted with id: " + id;
+        }
+        return "No contact found with id: " + id;
     }
 }
