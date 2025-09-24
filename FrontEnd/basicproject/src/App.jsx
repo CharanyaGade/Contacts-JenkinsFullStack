@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import config from "./config"; 
@@ -8,7 +9,7 @@ function App() {
 
   // Load contacts from backend
   useEffect(() => {
-    fetch(`${config.API_BASE_URL}/contacts`)
+    fetch(`${config.API_BASE_URL}/all`)
       .then((res) => res.json())
       .then((data) => setContacts(data))
       .catch((err) => console.error("Error fetching contacts:", err));
@@ -21,7 +22,7 @@ function App() {
       return;
     }
 
-    fetch(`${config.API_BASE_URL}/contacts`, {
+    fetch(`${config.API_BASE_URL}/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newContact),
@@ -36,7 +37,7 @@ function App() {
 
   // Delete contact
   const deleteContact = (id) => {
-    fetch(`${config.API_BASE_URL}/contacts/${id}`, {
+    fetch(`${config.API_BASE_URL}/delete/${id}`, {
       method: "DELETE",
     })
       .then(() => setContacts(contacts.filter((c) => c.id !== id)))
@@ -45,7 +46,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1> Contact Book</h1>
+      <h1>Contact Book</h1>
 
       {/* Input Form */}
       <div className="form">
@@ -67,7 +68,7 @@ function App() {
           value={newContact.email}
           onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
         />
-        <button onClick={addContact}> Add Contact</button>
+        <button onClick={addContact}>Add Contact</button>
       </div>
 
       {/* Contact List */}
@@ -75,7 +76,7 @@ function App() {
         {contacts.map((c) => (
           <li key={c.id}>
             <span>{c.name} | {c.phone} | {c.email}</span>
-            <button onClick={() => deleteContact(c.id)}> Delete</button>
+            <button onClick={() => deleteContact(c.id)}>Delete</button>
           </li>
         ))}
       </ul>
