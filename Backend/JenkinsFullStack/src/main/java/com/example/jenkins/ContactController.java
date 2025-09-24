@@ -11,7 +11,10 @@ public class ContactController {
 
     private List<Contact> contacts = new ArrayList<>();
     private int nextId = 1;
-
+    @GetMapping("/")
+    public String home() {
+        return "Jenkins Full Stack Deployment API is running...";
+    }
     // CREATE
     @PostMapping
     public Contact addContact(@RequestBody Contact contact) {
