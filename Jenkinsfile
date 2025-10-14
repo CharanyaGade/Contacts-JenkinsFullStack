@@ -6,7 +6,7 @@ pipeline {
         // ===== FRONTEND BUILD =====
         stage('Build Frontend') {
             steps {
-                dir('C:\\FullStack_Jenkins\\FrontEnd\\basicproject') {
+                dir('E:\\JenkinsFullStack-Contacts\\FrontEnd\\basicproject') {
                     bat 'npm install'
                     bat 'npm run build'
                 }
@@ -29,7 +29,7 @@ pipeline {
         // ===== BACKEND BUILD =====
         stage('Build Backend') {
             steps {
-                dir('C:\\FullStack_Jenkins\\Backend\\JenkinsFullStack') {
+                dir('E:\\JenkinsFullStack-Contacts\\Backend\\JenkinsFullStack') {
                     bat 'mvn clean package'
                 }
             }
