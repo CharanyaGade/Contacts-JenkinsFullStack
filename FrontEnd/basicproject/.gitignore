@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -23,11 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-=======
-# Eclipse IDE files
-.metadata/
-*.iml
-*.class
-/bin/
-/target/
->>>>>>> e39c8c7a13bb3068727026c6838893b55b9ee575
